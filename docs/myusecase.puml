@@ -1,0 +1,73 @@
+@startuml
+
+left to right direction
+
+skinparam packageStyle rectangle
+skinparam shadowing false
+skinparam usecase {
+    BackgroundColor #A69CF2
+    BorderColor #FFFFFF
+    FontSize 12
+}
+skinparam actor {
+    FontSize 12
+}
+
+actor "Сотрудник" as Employee
+actor "Клиент" as Client
+
+rectangle "Информационная система бронирования помещения" {
+
+    ' =========================
+    ' Сотрудник
+    ' =========================
+
+    usecase "Вход в систему" as EmployeeLogin
+    usecase "Добавление\nсотрудника" as AddEmployee
+    usecase "Зарегистрировать\nзаявку на аренду" as RegisterRequest
+    usecase "Подбор\nсвободного\nпомещения" as SelectFreeRoom
+    usecase "Меню заявок" as RequestMenu
+    usecase "Просмотр заявок\nклиентов" as ViewClientRequests
+
+    ' Новые действия с заявкой
+    usecase "Подтверждение\nзаявки" as ConfirmRequest
+    usecase "Ожидание\nподтверждения" as WaitingConfirmation
+    usecase "Отмена\nзаявки" as CancelRequest
+
+    Employee -- EmployeeLogin
+    EmployeeLogin -- AddEmployee
+    EmployeeLogin -- RegisterRequest
+    EmployeeLogin -- SelectFreeRoom
+    EmployeeLogin -- RequestMenu
+
+    RequestMenu -- ViewClientRequests
+
+    ' Три действия после просмотра заявок
+    ViewClientRequests -- ConfirmRequest
+    ViewClientRequests -- WaitingConfirmation
+    ViewClientRequests -- CancelRequest
+
+
+    ' =========================
+    ' Клиент
+    ' =========================
+
+    usecase "Регистрация в\nсистеме" as Registration
+    usecase "Вход в систему" as ClientLogin
+    usecase "Бронирование\nпомещения" as Booking
+    usecase "Выбор\nпомещения" as SelectRoom
+    usecase "Просмотр\nпомещений" as ViewRooms
+    usecase "Просмотр своих\nбронирований" as ViewBookings
+
+    Client -- Registration
+    Client -- ClientLogin
+
+    ClientLogin -- Booking
+    ClientLogin -- ViewBookings
+
+    Booking ..> SelectRoom : <<include>>
+    Booking ..> ViewRooms : <<include>>
+
+}
+
+@enduml
