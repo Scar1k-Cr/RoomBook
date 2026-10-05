@@ -1,0 +1,55 @@
+@startuml RoomBookingSystem
+left to right direction
+skinparam packageStyle rectangle
+
+actor "Клиент" as Client
+actor "Сотрудник" as Staff
+
+package "Информационная система бронирования помещения" {
+
+    ' ===== Клиент =====
+    usecase "Регистрация в\nсистеме" as UC_Register
+    usecase "Вход в систему" as UC_Login_Client
+    usecase "Бронирование\nпомещения" as UC_Booking
+    usecase "Выбор\nпомещения" as UC_Select_Room
+    usecase "Просмотр\nпомещений" as UC_View_Rooms
+    usecase "Просмотр своих\nбронирований" as UC_View_My_Bookings
+
+    ' ===== Сотрудник =====
+    usecase "Вход в систему" as UC_Login_Staff
+    usecase "Добавление\nсотрудника" as UC_Add_Staff
+    usecase "Регистрация\nзаявки на аренду" as UC_Register_Request
+    usecase "Подбор свободного\nпомещения" as UC_Find_Room
+    usecase "Меню заявок" as UC_Request_Menu
+    usecase "Просмотр заявок\nклиентов" as UC_View_Requests
+    usecase "Обработка\nвыбранной заявки" as UC_Process_Request
+    usecase "Подтверждение\nбронирования" as UC_Confirm_Booking
+    usecase "Удаление\nвыбранной заявки" as UC_Delete_Request
+}
+
+' ===== Связи клиента =====
+Client --> UC_Register
+Client --> UC_Login_Client
+
+UC_Login_Client --> UC_Booking
+UC_Login_Client --> UC_View_My_Bookings
+
+UC_Booking --> UC_Select_Room : <<include>>
+UC_Booking --> UC_View_Rooms : <<include>>
+
+' ===== Связи сотрудника =====
+Staff --> UC_Login_Staff
+
+UC_Login_Staff --> UC_Add_Staff
+UC_Login_Staff --> UC_Register_Request
+UC_Login_Staff --> UC_Find_Room
+UC_Login_Staff --> UC_Request_Menu
+
+UC_Request_Menu --> UC_View_Requests
+
+UC_View_Requests --> UC_Process_Request
+UC_View_Requests --> UC_Delete_Request
+
+UC_Process_Request --> UC_Confirm_Booking : <<include>>
+
+@enduml
