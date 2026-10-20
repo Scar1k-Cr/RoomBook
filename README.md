@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="docs/pelmedo.png" alt="RoomBook Logo" width="120" />
+  <img src="docs/pelmedo.jpg" alt="RoomBook Logo" width="120" />
   <h1>RoomBook</h1>
   <h3>Ver. 1.0</h3>
 </div>
